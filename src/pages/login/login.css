@@ -44,6 +44,16 @@
     justify-content: space-between;
 }
 
+.loginError{
+    color: red;
+    font-size: 14px;
+    text-align: center;
+    padding: 10px;
+    background-color: #ffebee;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
 .loginInput{
     height: 50px;
     border-radius: 10px;
@@ -64,6 +74,15 @@
     color: white;
     font-size: 20px;
     cursor: pointer;
+}
+
+.loginButton:hover{
+    background-color: rgb(41, 38, 146);
+}
+
+.loginButton:disabled{
+    background-color: #ccc;
+    cursor: not-allowed;
 }
 
 .loginForgot{

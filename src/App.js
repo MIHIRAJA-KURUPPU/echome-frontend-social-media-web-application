@@ -1,25 +1,53 @@
 // src/App.js
-import React from 'react';
-import Home from './pages/home/Home'; // Importing Home component if needed later
-import Profile from './pages/profile/Profile'; // Importing the Profile component
+import React, { useContext } from 'react';
+import Home from './pages/home/Home';
+import Profile from './pages/profile/Profile';
 import Login from './pages/login/Login';
 import Register from './pages/register/Register';
+import { AuthContext, AuthContextProvider } from './context/AuthContext';
 import {
   BrowserRouter as Router,
-  Routes, // Changed from Switch to Routes
-  Route
+  Routes,
+  Route,
+  Navigate
 } from "react-router-dom";
+
+function ProtectedRoute({ children }) {
+  const { user, loading } = useContext(AuthContext);
+  
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+  
+  return user ? children : <Navigate to="/login" />;
+}
 
 function App() {
   return (
-    <Router>
-      <Routes> {/* Changed from Switch to Routes */}
-        <Route path="/" element={<Home />} /> {/* Use element prop */}
-        <Route path="/profile/:username" element={<Profile />} /> {/* Use element prop */}
-        <Route path="/login" element={<Login />} /> {/* Use element prop */}
-        <Route path="/register" element={<Register />} /> {/* Use element prop */}
-      </Routes>
-    </Router>
+    <AuthContextProvider>
+      <Router>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route 
+            path="/" 
+            element={
+              <ProtectedRoute>
+                <Home />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/profile/:username" 
+            element={
+              <ProtectedRoute>
+                <Profile />
+              </ProtectedRoute>
+            } 
+          />
+        </Routes>
+      </Router>
+    </AuthContextProvider>
   );
 }
 
