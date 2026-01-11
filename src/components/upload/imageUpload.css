@@ -1,0 +1,127 @@
+.imageUploadContainer {
+  width: 100%;
+  margin: 10px 0;
+}
+
+.imageUploadDropzone {
+  border: 2px dashed #ccc;
+  border-radius: 8px;
+  padding: 40px 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s;
+  background-color: #f9f9f9;
+}
+
+.imageUploadDropzone:hover {
+  border-color: #1976d2;
+  background-color: #f0f7ff;
+}
+
+.imageUploadIcon {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+
+.imageUploadDropzone p {
+  font-size: 16px;
+  color: #333;
+  margin: 10px 0;
+}
+
+.imageUploadHint {
+  font-size: 12px;
+  color: #999;
+}
+
+.imageUploadLoading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.spinner {
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #1976d2;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.imageUploadPreview {
+  position: relative;
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.imageUploadPreview img {
+  width: 100%;
+  height: auto;
+  max-height: 400px;
+  object-fit: contain;
+  display: block;
+}
+
+.imageUploadRemove {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  font-size: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
+}
+
+.imageUploadRemove:hover {
+  background-color: rgba(255, 0, 0, 0.8);
+}
+
+.imageUploadOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.imageUploadError {
+  color: #f44336;
+  font-size: 14px;
+  margin-top: 10px;
+  text-align: center;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .imageUploadDropzone {
+    padding: 30px 15px;
+  }
+
+  .imageUploadIcon {
+    font-size: 36px;
+  }
+
+  .imageUploadDropzone p {
+    font-size: 14px;
+  }
+}

@@ -4,6 +4,7 @@ import Home from './pages/home/Home';
 import Profile from './pages/profile/Profile';
 import Login from './pages/login/Login';
 import Register from './pages/register/Register';
+import Search from './pages/search/Search';
 import { AuthContext, AuthContextProvider } from './context/AuthContext';
 import {
   BrowserRouter as Router,
@@ -42,6 +43,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <Profile />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/search" 
+            element={
+              <ProtectedRoute>
+                <Search />
               </ProtectedRoute>
             } 
           />

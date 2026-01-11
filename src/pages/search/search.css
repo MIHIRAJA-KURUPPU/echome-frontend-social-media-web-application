@@ -1,0 +1,196 @@
+.searchContainer {
+  display: flex;
+}
+
+.searchMain {
+  flex: 6;
+  padding: 20px;
+}
+
+.searchHeader {
+  margin-bottom: 30px;
+}
+
+.searchHeader h2 {
+  font-size: 24px;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.searchTabs {
+  display: flex;
+  gap: 10px;
+  border-bottom: 2px solid #e0e0e0;
+  padding-bottom: 10px;
+}
+
+.searchTabs button {
+  background: none;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  color: #666;
+  border-bottom: 3px solid transparent;
+  transition: all 0.2s;
+}
+
+.searchTabs button:hover {
+  color: #1976d2;
+}
+
+.searchTabs button.active {
+  color: #1976d2;
+  border-bottom-color: #1976d2;
+  font-weight: 600;
+}
+
+.searchLoading,
+.searchEmpty {
+  text-align: center;
+  padding: 40px;
+  color: #757575;
+  font-size: 16px;
+}
+
+.searchResults {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.searchSection h3 {
+  font-size: 18px;
+  margin-bottom: 15px;
+  color: #333;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+/* User Results */
+.searchUserItem {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  margin-bottom: 10px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.searchUserItem:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.searchUserImg {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 15px;
+}
+
+.searchUserInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.searchUserName {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 4px;
+}
+
+.searchUserDesc {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 4px;
+}
+
+.searchUserStats {
+  font-size: 12px;
+  color: #999;
+}
+
+/* Post Results */
+.searchPostItem {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  margin-bottom: 15px;
+}
+
+.searchPostHeader {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.searchPostUserImg {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 10px;
+}
+
+.searchPostUsername {
+  font-size: 15px;
+  font-weight: 600;
+  color: #333;
+  display: block;
+}
+
+.searchPostDate {
+  font-size: 12px;
+  color: #999;
+  display: block;
+}
+
+.searchPostContent {
+  font-size: 14px;
+  color: #333;
+  line-height: 1.5;
+  margin-bottom: 12px;
+}
+
+.searchPostImg {
+  width: 100%;
+  max-height: 400px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+
+.searchPostStats {
+  font-size: 13px;
+  color: #666;
+  padding-top: 10px;
+  border-top: 1px solid #e0e0e0;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .searchMain {
+    padding: 10px;
+  }
+
+  .searchHeader h2 {
+    font-size: 20px;
+  }
+
+  .searchTabs button {
+    padding: 8px 15px;
+    font-size: 14px;
+  }
+
+  .searchUserImg {
+    width: 50px;
+    height: 50px;
+  }
+}

@@ -3,22 +3,76 @@ import PermMedia from '@mui/icons-material/PermMedia';
 import Label from '@mui/icons-material/Label';
 import Room from '@mui/icons-material/Room';
 import EmojiEmotions from '@mui/icons-material/EmojiEmotions';
+import { useState, useContext } from 'react';
+import API from '../../api/axios';
+import { AuthContext } from '../../context/AuthContext';
 
 export default function Share() {
+    const { user } = useContext(AuthContext);
+    const [desc, setDesc] = useState('');
+    const [file, setFile] = useState(null);
+    const [uploading, setUploading] = useState(false);
+
+    const handleShare = async () => {
+        if (!user) return window.alert('Please login to create a post');
+        if (!desc.trim() && !file) return window.alert('Please add some content to your post');
+
+        try {
+            let imgUrl = '';
+            if (file) {
+                setUploading(true);
+                const form = new FormData();
+                form.append('file', file);
+                const res = await API.post('/upload/post', form, { headers: { 'Content-Type': 'multipart/form-data' } });
+                imgUrl = res.data.data.url;
+                setUploading(false);
+            }
+
+            const payload = { userId: user.id, desc, img: imgUrl };
+            const response = await API.post('/posts', payload);
+            setDesc('');
+            setFile(null);
+            // Refresh the page to show the new post
+            setTimeout(() => window.location.reload(), 500);
+        } catch (err) {
+            setUploading(false);
+            console.error('Share error', err);
+            alert(err.response?.data?.message || 'Failed to create post');
+        }
+    };
+
     return (
         <div className="share">
             <div className ="shareWrapper">
                 <div className="shareTop">
-                    <img className="shareProfileImg" src="/assets/person/1.jpg" alt="" />
-                    <input placeholder="What's in your mind? Share your thoughts!" className="shareInput" />
+                    <img className="shareProfileImg" src={user?.profilePicture || '/assets/person/1.jpg'} alt="" />
+                    <input
+                      placeholder="What's in your mind? Share your thoughts!"
+                      className="shareInput"
+                      value={desc}
+                      onChange={(e) => setDesc(e.target.value)}
+                    />
                 </div>
                 <hr className="shareHr" />
+                {file && (
+                    <div className="shareImgContainer">
+                        <img className="shareImg" src={URL.createObjectURL(file)} alt="" />
+                        <button className="shareCancelImg" onClick={() => setFile(null)}>✕</button>
+                    </div>
+                )}
                 <div className="shareBottom">
                     <div className="shareOptions">
-                        <div className="shareOption">
+                        <label className="shareOption" htmlFor="file">
                             <PermMedia htmlColor="tomato" className="shareIcon" />
                             <span className="shareOptionText">Photo or Video</span>
-                        </div>
+                            <input
+                              id="file"
+                              type="file"
+                              accept="image/*"
+                              style={{ display: 'none' }}
+                              onChange={(e) => setFile(e.target.files[0])}
+                            />
+                        </label>
                         <div className="shareOption">
                             <Label htmlColor="blue" className="shareIcon" />
                             <span className="shareOptionText">Tag</span>
@@ -32,9 +86,9 @@ export default function Share() {
                             <span className="shareOptionText">Feelings</span>
                         </div>
                     </div>
-                    <button className="shareButton">Share</button>
+                    <button className="shareButton" onClick={handleShare} disabled={uploading}>{uploading ? 'Uploading...' : 'Share'}</button>
                 </div>
         </div>
     </div>
     );
-}   // end of Share function
+}
