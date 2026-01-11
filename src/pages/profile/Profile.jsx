@@ -7,6 +7,7 @@ import "./profile.css";
 
 
 export default function Profile() {
+    const PF =process.env.REACT_APP_PUBLIC_FOLDER;
     return (
         <>
 
@@ -16,8 +17,8 @@ export default function Profile() {
         <div className="profileRight">
         <div className="profileRightTop"> 
             <div className="profileCover">
-            <img className="profileCoverImg" src="/assets/post/14.jpg" alt="" />
-            <img className="profileUserImg" src="/assets/person/1.jpg" alt="" />
+            <img className="profileCoverImg" src={`${PF}post/14.jpg`} alt="" />
+            <img className="profileUserImg" src={`${PF}person/1.jpg`} alt="" />
             </div>
         <div className="profileInfo">
             <h4 className="profileInfoName">Adithya Roy</h4>
