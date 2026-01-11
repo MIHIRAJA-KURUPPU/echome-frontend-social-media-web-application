@@ -1,7 +1,6 @@
 import "./rightbar.css";
 import Online from "../online/Online";
 import {Users} from "../../dummyData";
-import Profile from "../../pages/profile/Profile";
 
 export default function Rightbar({profile}) {
     const PF =process.env.REACT_APP_PUBLIC_FOLDER;
