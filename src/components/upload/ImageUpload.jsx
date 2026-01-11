@@ -59,7 +59,11 @@ export default function ImageUpload({ type = 'post', onUploadSuccess, currentIma
       });
 
       if (res.data.success) {
-        const imageUrl = res.data.data.url;
+        // Convert relative URL to absolute URL (without /api prefix)
+        const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:8800/api';
+        const baseUrl = apiUrl.split('/api')[0];
+        const imageUrl = `${baseUrl}${res.data.data.url}`;
+        console.log('Image uploaded, URL:', imageUrl);
         setPreview(imageUrl);
         if (onUploadSuccess) {
           onUploadSuccess(imageUrl, res.data.data.filename);

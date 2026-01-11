@@ -24,7 +24,11 @@ export default function Share() {
                 const form = new FormData();
                 form.append('file', file);
                 const res = await API.post('/upload/post', form, { headers: { 'Content-Type': 'multipart/form-data' } });
-                imgUrl = res.data.data.url;
+                // Convert relative URL to absolute URL (without /api prefix)
+                const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:8800/api';
+                const baseUrl = apiUrl.split('/api')[0];
+                imgUrl = `${baseUrl}${res.data.data.url}`;
+                console.log('Image uploaded, URL:', imgUrl);
                 setUploading(false);
             }
 

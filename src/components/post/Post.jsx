@@ -14,6 +14,26 @@ export default function Post({post}) {
     const PF = process.env.REACT_APP_PUBLIC_FOLDER || '';
     const { user } = useContext(AuthContext);
 
+    // Helper function to convert relative URLs to absolute URLs
+    const getAbsoluteImageUrl = (imgUrl) => {
+        if (!imgUrl) return null;
+        // If already absolute URL, return as is
+        if (imgUrl.startsWith('http://') || imgUrl.startsWith('https://')) {
+            return imgUrl;
+        }
+        // Convert relative URL to absolute
+        const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:8800/api';
+        const baseUrl = apiUrl.split('/api')[0];
+        return `${baseUrl}${imgUrl}`;
+    };
+
+    // Debug: Log post data to see image URL
+    useEffect(() => {
+        console.log('Post data:', post);
+        console.log('Post image URL:', post?.img);
+        console.log('Absolute image URL:', getAbsoluteImageUrl(post?.img));
+    }, [post]);
+
     useEffect(() => {
         const fetchCommentsCount = async () => {
             try {
@@ -56,7 +76,7 @@ export default function Post({post}) {
                 </div>
                 <div className="postCenter">
                     <span className="postText">{post?.desc}</span>
-                    {post?.img && <img className="postImg" src={post.img} alt="" />}
+                    {post?.img && <img className="postImg" src={getAbsoluteImageUrl(post.img)} alt="" />}
                 </div>
                 <div className="postBottom">
                     <div className="postBottomLeft">
