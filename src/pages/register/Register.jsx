@@ -1,6 +1,7 @@
 import "./register.css";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
 import API from "../../api/axios";
 
 export default function Register() {
@@ -11,6 +12,7 @@ export default function Register() {
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+    const { login } = useContext(AuthContext);
 
     const handleRegister = async (e) => {
         e.preventDefault();
@@ -27,13 +29,33 @@ export default function Register() {
             return;
         }
 
+        // Password strength validation
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/;
+        if (!passwordRegex.test(password)) {
+            setError("Password must contain at least one uppercase letter, one lowercase letter, and one number!");
+            return;
+        }
+
         setLoading(true);
 
         try {
-            await API.post("/auth/register", { username, email, password });
-            navigate("/login");
+            const response = await API.post("/auth/register", { username, email, password });
+            
+            if (response.data.success) {
+                // Auto-login after registration
+                login(response.data.user, response.data.token);
+                navigate("/");
+            } else {
+                setError(response.data.message || "Registration failed. Please try again.");
+            }
         } catch (err) {
-            setError(err.response?.data?.message || "Registration failed. Please try again.");
+            if (err.response?.data?.errors) {
+                // Handle validation errors from backend
+                const errorMessages = err.response.data.errors.map(e => e.message).join(", ");
+                setError(errorMessages);
+            } else {
+                setError(err.response?.data?.message || "Registration failed. Please try again.");
+            }
         } finally {
             setLoading(false);
         }

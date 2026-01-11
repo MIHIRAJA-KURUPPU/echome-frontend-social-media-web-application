@@ -7,13 +7,12 @@ const API = axios.create({
   },
 });
 
-// Add request interceptor for future authentication
+// Add request interceptor for JWT authentication
 API.interceptors.request.use(
   (config) => {
-    const user = localStorage.getItem('user');
-    if (user) {
-      const userData = JSON.parse(user);
-      config.headers.userId = userData.id;
+    const token = localStorage.getItem('token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
   },
@@ -26,7 +25,9 @@ API.interceptors.request.use(
 API.interceptors.response.use(
   (response) => response,
   (error) => {
+    // Handle authentication errors
     if (error.response?.status === 401) {
+      localStorage.removeItem('token');
       localStorage.removeItem('user');
       window.location.href = '/login';
     }

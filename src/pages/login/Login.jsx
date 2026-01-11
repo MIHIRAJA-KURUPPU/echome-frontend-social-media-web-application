@@ -19,8 +19,13 @@ export default function Login() {
 
         try {
             const response = await API.post("/auth/login", { email, password });
-            login(response.data.user);
-            navigate("/");
+            
+            if (response.data.success) {
+                login(response.data.user, response.data.token);
+                navigate("/");
+            } else {
+                setError(response.data.message || "Login failed. Please try again.");
+            }
         } catch (err) {
             setError(err.response?.data?.message || "Login failed. Please try again.");
         } finally {
